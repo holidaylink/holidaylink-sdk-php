@@ -1,0 +1,28 @@
+{
+  "name": "holidaylink/api-sdk-php",
+  "description": "HolidayLink.com PHP SDK for API",
+  "keywords": [
+    "holidaylink",
+    "api",
+    "sdk"
+  ],
+  "type": "library",
+  "license": "Apache2",
+  "homepage": "https://github.com/holidaylink/holidaylink-sdk-php",
+  "authors": [
+    {
+      "name": "Holiday-Link.com",
+      "homepage": "https://www.holiday-link.com/"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.0",
+    "ext-json": "*",
+    "guzzlehttp/guzzle": "^6.1"
+  },
+  "autoload": {
+    "psr-0": {
+      "HolidayLink\\": "lib/"
+    }
+  }
+}
