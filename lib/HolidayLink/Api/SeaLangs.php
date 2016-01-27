@@ -72,11 +72,12 @@ class SeaLangs extends Model {
     }
 
     $call = new XmlCall($credentials);
-    $sxe = $call->execute('sea-langs', array_intersect_key($params, $allowedParams));
+    $sxe = $call->execute('sea-langs', 'GET', array_intersect_key($params, $allowedParams));
 
     $ret = new self();
     $ret->fromXML($sxe);
 
     return $ret;
   }
+
 }

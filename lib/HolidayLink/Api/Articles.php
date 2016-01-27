@@ -72,11 +72,12 @@ class Articles extends Model {
     }
 
     $call = new XmlCall($credentials);
-    $sxe = $call->execute('articles', array_intersect_key($params, $allowedParams));
+    $sxe = $call->execute('articles', 'GET', array_intersect_key($params, $allowedParams));
 
     $ret = new self();
     $ret->fromXML($sxe);
 
     return $ret;
   }
+
 }

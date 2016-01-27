@@ -72,11 +72,12 @@ class Pricelists extends Model {
     }
 
     $call = new XmlCall($credentials);
-    $sxe = $call->execute('pricelists', array_intersect_key($params, $allowedParams));
+    $sxe = $call->execute('pricelists', 'GET', array_intersect_key($params, $allowedParams));
 
     $ret = new self();
     $ret->fromXML($sxe);
 
     return $ret;
   }
+
 }

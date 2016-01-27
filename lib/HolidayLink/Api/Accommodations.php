@@ -73,11 +73,12 @@ class Accommodations extends Model {
     }
 
     $call = new XmlCall($credentials);
-    $sxe = $call->execute('accommodations', array_intersect_key($params, $allowedParams));
+    $sxe = $call->execute('accommodations', 'GET', array_intersect_key($params, $allowedParams));
 
     $ret = new self();
     $ret->fromXML($sxe);
 
     return $ret;
   }
+
 }

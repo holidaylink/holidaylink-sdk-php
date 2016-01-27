@@ -72,11 +72,12 @@ class MediaDescriptions extends Model {
     }
 
     $call = new XmlCall($credentials);
-    $sxe = $call->execute('media-descriptions', array_intersect_key($params, $allowedParams));
+    $sxe = $call->execute('media-descriptions', 'GET', array_intersect_key($params, $allowedParams));
 
     $ret = new self();
     $ret->fromXML($sxe);
 
     return $ret;
   }
+
 }

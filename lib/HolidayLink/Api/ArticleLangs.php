@@ -72,7 +72,7 @@ class ArticleLangs extends Model {
     }
 
     $call = new XmlCall($credentials);
-    $sxe = $call->execute('article-langs', array_intersect_key($params, $allowedParams));
+    $sxe = $call->execute('article-langs', 'GET', array_intersect_key($params, $allowedParams));
 
     $ret = new self();
     $ret->fromXML($sxe);

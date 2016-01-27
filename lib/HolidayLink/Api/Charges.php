@@ -72,11 +72,12 @@ class Charges extends Model {
     }
 
     $call = new XmlCall($credentials);
-    $sxe = $call->execute('charges', array_intersect_key($params, $allowedParams));
+    $sxe = $call->execute('charges', 'GET', array_intersect_key($params, $allowedParams));
 
     $ret = new self();
     $ret->fromXML($sxe);
 
     return $ret;
   }
+
 }

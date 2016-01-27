@@ -72,11 +72,12 @@ class FeatureValues extends Model {
     }
 
     $call = new XmlCall($credentials);
-    $sxe = $call->execute('feature-values', array_intersect_key($params, $allowedParams));
+    $sxe = $call->execute('feature-values', 'GET', array_intersect_key($params, $allowedParams));
 
     $ret = new self();
     $ret->fromXML($sxe);
 
     return $ret;
   }
+
 }

@@ -72,7 +72,7 @@ class AccommodationUnitFeatureValues extends Model {
     }
 
     $call = new XmlCall($credentials);
-    $sxe = $call->execute('accommodation-unit-feature-values', array_intersect_key($params, $allowedParams));
+    $sxe = $call->execute('accommodation-unit-feature-values', 'GET', array_intersect_key($params, $allowedParams));
 
     $ret = new self();
     $ret->fromXML($sxe);

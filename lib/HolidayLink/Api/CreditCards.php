@@ -72,11 +72,12 @@ class CreditCards extends Model {
     }
 
     $call = new XmlCall($credentials);
-    $sxe = $call->execute('credit-cards', array_intersect_key($params, $allowedParams));
+    $sxe = $call->execute('credit-cards', 'GET', array_intersect_key($params, $allowedParams));
 
     $ret = new self();
     $ret->fromXML($sxe);
 
     return $ret;
   }
+
 }

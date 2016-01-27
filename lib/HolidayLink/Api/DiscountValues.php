@@ -72,11 +72,12 @@ class DiscountValues extends Model {
     }
 
     $call = new XmlCall($credentials);
-    $sxe = $call->execute('discount-values', array_intersect_key($params, $allowedParams));
+    $sxe = $call->execute('discount-values', 'GET', array_intersect_key($params, $allowedParams));
 
     $ret = new self();
     $ret->fromXML($sxe);
 
     return $ret;
   }
+
 }

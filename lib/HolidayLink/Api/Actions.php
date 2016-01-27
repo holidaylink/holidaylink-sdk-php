@@ -72,11 +72,12 @@ class Actions extends Model {
     }
 
     $call = new XmlCall($credentials);
-    $sxe = $call->execute('actions', array_intersect_key($params, $allowedParams));
+    $sxe = $call->execute('actions', 'GET', array_intersect_key($params, $allowedParams));
 
     $ret = new self();
     $ret->fromXML($sxe);
 
     return $ret;
   }
+
 }
