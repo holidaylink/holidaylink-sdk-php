@@ -50,10 +50,17 @@ class GuzzleHttpConnection {
     }
 
     try {
-      $response = $this->client->{$this->requestMethods[$method]}($url, [
-        'headers' => $headers,
-        'verify' => false,
-      ]);
+      $options = array_merge([
+          'headers' => $headers['headers'],
+          'verify' => false,
+        ],
+        array_key_exists('data', $headers) ? $headers['data'] : []
+      );
+
+      $request = $this->client->createRequest($this->requestMethods[$method], $url, $options);
+
+      $response = $this->client->send($request);
+
     } catch (RequestException $e) {
       echo $e->getRequest() . "\n";
 

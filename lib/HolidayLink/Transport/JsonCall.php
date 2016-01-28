@@ -14,18 +14,39 @@ class JsonCall extends ApiCall {
   const ACCEPT = 'application/json';
 
   /**
+   * Constant CONTENT_TYPE
+   */
+  const CONTENT_TYPE = 'application/json';
+
+  /**
+   * Prepare header for request
+   *
+   * @param $data
+   *
+   * @return array
+   */
+  protected function prepareHeaders ($data) {
+    return [
+      'headers' => [
+        'Accept' => self::ACCEPT,
+        'Content-Type' => self::CONTENT_TYPE,
+      ],
+      'data' => [
+        'json' => $data
+      ],
+    ];
+  }
+
+  /**
    * Returns the decoded JSON response
    *
-   * @param $response - JSON encoded response
+   * @param $response
    *
    * @return mixed
-   * @throws \Exception
    */
   protected function parseResponse ($response) {
-    if (($decodedResponse = json_decode($response['content'], true)) === false) {
-      throw new \Exception('API error: ' . $response['content']);
-    }
-
-    return $decodedResponse;
+    // returns decoded json as array
+    return $response->json();
   }
+
 }
