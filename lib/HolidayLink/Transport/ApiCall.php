@@ -40,18 +40,15 @@ abstract class ApiCall {
    * @param $path
    * @param string $method
    * @param array $params
+   * @param array $data
    *
    * @return mixed
    */
-  public function execute ($path, $method = 'GET', $params = []) {
+  public function execute ($path, $method = 'GET', array $params = [], $data = []) {
     $this->url = $this->httpConfig->getURL($path, $params);
 
-    $headers = [
-      'Accept' => static::ACCEPT,
-    ];
-
     $client = new GuzzleHttpConnection();
-    $response = $client->execute($this->url, $method, $headers);
+    $response = $client->execute($this->url, $method, static::prepareHeaders($data));
 
     return $this->parseResponse($response);
   }
@@ -60,4 +57,9 @@ abstract class ApiCall {
    * Returns the parsed response
    */
   abstract protected function parseResponse ($response);
+
+  /**
+   * Returns the prepared header
+   */
+  abstract protected function prepareHeaders ($data);
 }

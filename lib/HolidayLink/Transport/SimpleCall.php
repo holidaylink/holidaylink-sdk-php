@@ -3,15 +3,15 @@
 namespace HolidayLink\Transport;
 
 /**
- * Class XmlCall
+ * Class SimpleCall
  * @package HolidayLink\Transport
  */
-class XmlCall extends ApiCall {
+class SimpleCall extends ApiCall {
 
   /**
    * Constant ACCEPT
    */
-  const ACCEPT = 'application/xml';
+  const ACCEPT = '';
 
   /**
    * Prepare header for request
@@ -33,9 +33,9 @@ class XmlCall extends ApiCall {
    *
    * @param $response
    *
-   * @return \SimpleXMLElement
+   * @return mixed
    */
   protected function parseResponse ($response) {
-    return $response->xml();
+    return $response;
   }
 }
