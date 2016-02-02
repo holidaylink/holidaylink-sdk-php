@@ -1,16 +1,11 @@
 <?php
-/**
- * This sample demonstrates how to delete accommodation
- *
- * API action: deleteAccommodation
- */
 
 require __DIR__ . '/../bootstrap.php';
 
 use HolidayLink\Api\Accommodation;
 
 /**
- * Delete the accommodation using optional code and your API credentials
+ * Create the accommodation using optional code and your API credentials
  * (see bootstrap.php for credentials creation)
  */
 try {
@@ -19,14 +14,21 @@ try {
     'expand' => 'postal_code',
   ];
   // provide data for update - array with key => value structure
+  /**
+   ****************************** IMPORTANT *******************************
+   * required params:
+   *  - title
+   *  - accommodation_category_id
+   *  - location_id (use just ids from cities, NOT region or country id)
+   */
   $data = [
-    'title' => 'test',
+    'title' => 'test accommodation',
     'postal_code' => '12345',
+    'accommodation_category_id' => 1,
+    'location_id' => 16,
   ];
 
-  //set your own accommodation code, this is only for test purpose
-  $code = 'your code';
-  $accommodation = Accommodation::updateSingle($code, $params, $data, $apiCredentials);
+  $accommodation = Accommodation::createSingle($params, $data, $apiCredentials);
 } catch (Exception $ex) {
   echo 'Exception:', $ex->getMessage(), PHP_EOL;
   exit(1);
@@ -36,10 +38,10 @@ try {
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Accommodation update</title>
+    <title>Accommodation create</title>
   </head>
   <body>
-    <div>Accommodation updated</div>
+    <div>Accommodation created</div>
     <pre><?php print_r($accommodation); ?></pre>
     <a href='../index.htm'>Back</a>
   </body>

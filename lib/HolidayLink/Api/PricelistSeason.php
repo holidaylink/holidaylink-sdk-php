@@ -31,7 +31,7 @@ class PricelistSeason extends Model {
    * @param  array $params
    * @param  Credentials $credentials API credentials
    *
-   * @return Properties  the retrieved pricelist season
+   * @return self  the retrieved pricelist season
    */
   public static function singleFromXML ($code, array $params = null, Credentials $credentials = null) {
     if (empty($params)) {
@@ -67,7 +67,7 @@ class PricelistSeason extends Model {
    * @param  array $data
    * @param  Credentials $credentials API credentials
    *
-   * @return Properties  the updated pricelist season
+   * @return self  the updated pricelist season
    */
   public static function updateSingle ($code, array $params = [], array $data= [], Credentials $credentials = null) {
     if (!empty($credentials)) {

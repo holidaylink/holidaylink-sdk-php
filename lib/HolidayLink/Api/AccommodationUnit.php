@@ -24,6 +24,12 @@ class AccommodationUnit extends Model {
     'updated_at',
   ];
 
+  static public $requiredFields = [
+    'title',
+    'accommodation_category_id',
+    'location_id',
+  ];
+
   /**
    * Retrieve single accommodation unit matching the $code filter
    *
@@ -31,7 +37,7 @@ class AccommodationUnit extends Model {
    * @param  array $params
    * @param  Credentials $credentials API credentials
    *
-   * @return Properties  the retrieved accommodation unit
+   * @return self  the retrieved accommodation unit
    */
   public static function singleFromXML ($code, array $params = null, Credentials $credentials = null) {
     if (empty($params)) {
@@ -60,6 +66,40 @@ class AccommodationUnit extends Model {
   }
 
   /**
+   * Create single accommodation unit from array of key => value params
+   *
+   * @param  array $params
+   * @param  array $data
+   * @param  Credentials $credentials API credentials
+   *
+   * @return self
+   */
+  public static function createSingle (array $params = [], array $data= [], Credentials $credentials = null) {
+    if (!empty($credentials)) {
+      self::setCredentials($credentials);
+    }
+
+    $allowedParams = array(
+      'expand' => 1,
+    );
+
+    $wrongParams = array_diff_key($params, $allowedParams);
+    if (!empty($wrongParams)) {
+      throw new \InvalidArgumentException('Invalid $params filter: ' . implode(', ', array_keys($wrongParams)));
+    }
+
+    $requiredParams = array_diff(self::$requiredFields, array_keys($data));
+    if (!empty($requiredParams)) {
+      throw new \InvalidArgumentException('Required params: ' . implode(', ', $requiredParams));
+    }
+
+    $call = new JsonCall($credentials);
+    $sxe = $call->execute('accommodation-units', 'POST', array_intersect_key($params, $allowedParams), $data);
+
+    return $sxe;
+  }
+
+  /**
    * Update single accommodation unit matching the $code filter and array of key => value params
    *
    * @param  string $code
@@ -67,7 +107,7 @@ class AccommodationUnit extends Model {
    * @param  array $data
    * @param  Credentials $credentials API credentials
    *
-   * @return Properties  the updated accommodation unit
+   * @return self  the updated accommodation unit
    */
   public static function updateSingle ($code, array $params = [], array $data= [], Credentials $credentials = null) {
     if (!empty($credentials)) {
