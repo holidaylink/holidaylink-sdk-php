@@ -13,7 +13,7 @@ use HolidayLink\Transport\XmlCall;
  */
 class Availability extends Model {
 
-  static public $fields = [
+  public static $fields = [
     'id',
     'status',
     'start_date',
@@ -22,6 +22,43 @@ class Availability extends Model {
     'created_at',
     'updated_at',
   ];
+
+  /**
+   * status options:
+   *  - const STATUS_UNSET = 0
+   *  - const STATUS_AVAILABLE = 1
+   *  - const STATUS_RESERVED_NOT_PAYED = 2
+   *  - const STATUS_RESERVED_PAYED = 3
+   *  - const STATUS_RESERVED_BY_AGENCY = 4
+   *  - const STATUS_RESERVED_BY_OWNER = 5
+   *
+   * start_date & end_date format:
+   *  - Y-m-d (2016-01-01)
+   *
+   * @var array
+   */
+  public static $requiredFields = [
+    'status',
+    'start_date',
+    'end_date',
+  ];
+
+  /**
+   * Availability statuses
+   */
+  const STATUS_UNSET = 0;
+  const STATUS_AVAILABLE = 1;
+  const STATUS_RESERVED_NOT_PAYED = 2;
+  const STATUS_RESERVED_PAYED = 3;
+  const STATUS_RESERVED_BY_AGENCY = 4;
+  const STATUS_RESERVED_BY_OWNER = 5;
+
+  /************************ Additional options **************************
+   *
+   * Visibility status
+   */
+  const VISIBILITY_STATUS_ACTIVE = 'active';
+  const VISIBILITY_STATUS_DISABLED = 'disabled';
 
   /**
    * Retrieve single availability matching the $code filter
@@ -56,6 +93,40 @@ class Availability extends Model {
     $ret->fromXML($sxe);
 
     return $ret;
+  }
+
+  /**
+   * Create single availability from array of key => value params
+   *
+   * @param  array $params
+   * @param  array $data
+   * @param  Credentials $credentials API credentials
+   *
+   * @return self
+   */
+  public static function createSingle (array $params = [], array $data= [], Credentials $credentials = null) {
+    if (!empty($credentials)) {
+      self::setCredentials($credentials);
+    }
+
+    $allowedParams = array(
+      'expand' => 1,
+    );
+
+    $wrongParams = array_diff_key($params, $allowedParams);
+    if (!empty($wrongParams)) {
+      throw new \InvalidArgumentException('Invalid $params filter: ' . implode(', ', array_keys($wrongParams)));
+    }
+
+    $requiredParams = array_diff(self::$requiredFields, array_keys($data));
+    if (!empty($requiredParams)) {
+      throw new \InvalidArgumentException('Required params: ' . implode(', ', $requiredParams));
+    }
+
+    $call = new JsonCall($credentials);
+    $sxe = $call->execute('availabilities', 'POST', array_intersect_key($params, $allowedParams), $data);
+
+    return $sxe;
   }
 
   /**

@@ -13,7 +13,7 @@ use HolidayLink\Transport\XmlCall;
  */
 class AccommodationUnitType extends Model {
 
-  static public $fields = [
+  public static $fields = [
     'code',
     'title',
     'description',

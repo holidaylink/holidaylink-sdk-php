@@ -13,7 +13,7 @@ use HolidayLink\Transport\XmlCall;
  */
 class DiscountValue extends Model {
 
-  static public $fields = [
+  public static $fields = [
     'id',
     'discount',
     'status',
@@ -22,6 +22,50 @@ class DiscountValue extends Model {
     'created_at',
     'updated_at',
   ];
+
+  /**
+   * discount_id options:
+   *  - use discount id keys from Discounts::allFromXML()
+   *
+   * status options:
+   *  - use constants from charge value statuses
+   *
+   * amount_value format: 10.10
+   *
+   * amount_unit options:
+   *  - use options from charge amount unit contants
+   *
+   * accommodation_unit_id options:
+   *  - use keys from AccommodationUnits::allFromXML()
+   *
+   * @var array
+   */
+  public static $requiredFields = [
+    'discount_id',
+    'status',
+    'amount_value',
+    'amount_unit',
+    'accommodation_unit_id',
+  ];
+
+  /**
+   * Discount value statuses
+   */
+  const STATUS_ACTIVE = 'active';
+  const STATUS_DISABLED = 'disabled';
+
+  /************************ Additional options **************************
+   *
+   * Discount value amount unit
+   */
+  const AMOUNT_UNIT_PERCENTAGE = 'percentage';
+  const AMOUNT_UNIT_ABSOLUTE = 'absolute';
+
+  /**
+   * Discount value bed type
+   */
+  const BED_TYPE_REGULAR = 'regular';
+  const BED_TYPE_EXTRA = 'extra';
 
   /**
    * Retrieve single discount value matching the $code filter
@@ -56,6 +100,40 @@ class DiscountValue extends Model {
     $ret->fromXML($sxe);
 
     return $ret;
+  }
+
+  /**
+   * Create single discount value from array of key => value params
+   *
+   * @param  array $params
+   * @param  array $data
+   * @param  Credentials $credentials API credentials
+   *
+   * @return self
+   */
+  public static function createSingle (array $params = [], array $data= [], Credentials $credentials = null) {
+    if (!empty($credentials)) {
+      self::setCredentials($credentials);
+    }
+
+    $allowedParams = array(
+      'expand' => 1,
+    );
+
+    $wrongParams = array_diff_key($params, $allowedParams);
+    if (!empty($wrongParams)) {
+      throw new \InvalidArgumentException('Invalid $params filter: ' . implode(', ', array_keys($wrongParams)));
+    }
+
+    $requiredParams = array_diff(self::$requiredFields, array_keys($data));
+    if (!empty($requiredParams)) {
+      throw new \InvalidArgumentException('Required params: ' . implode(', ', $requiredParams));
+    }
+
+    $call = new JsonCall($credentials);
+    $sxe = $call->execute('discount-values', 'POST', array_intersect_key($params, $allowedParams), $data);
+
+    return $sxe;
   }
 
   /**

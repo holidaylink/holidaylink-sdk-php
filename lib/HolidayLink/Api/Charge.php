@@ -13,7 +13,7 @@ use HolidayLink\Transport\XmlCall;
  */
 class Charge extends Model {
 
-  static public $fields = [
+  public static $fields = [
     'id',
     'title',
     'types',
@@ -21,6 +21,18 @@ class Charge extends Model {
     'calculationPerItem',
     'allowedCategories',
   ];
+
+  /**
+   * Charge statuses
+   */
+  const STATUS_ACTIVE = 'active';
+  const STATUS_DISABLED = 'disabled';
+
+  /**
+   * Charge statuses for partner
+   */
+  const STATUS_ACTIVE_FOR_PARTNER = 'active';
+  const STATUS_DISABLED_FOR_PARTNER = 'disabled';
 
   /**
    * Retrieve single charge matching the $code filter

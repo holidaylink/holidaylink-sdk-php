@@ -13,7 +13,7 @@ use HolidayLink\Transport\XmlCall;
  */
 class CreditCard extends Model {
 
-  static public $fields = [
+  public static $fields = [
     'id',
     'status',
     'created_at',

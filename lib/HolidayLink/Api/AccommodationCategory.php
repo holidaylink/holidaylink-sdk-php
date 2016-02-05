@@ -13,12 +13,14 @@ use HolidayLink\Transport\XmlCall;
  */
 class AccommodationCategory extends Model {
 
-  static public $fields = [
+  public static $fields = [
     'code',
     'title',
     'description',
     'accommodationUnitTypes',
   ];
+
+  public static $requiredFields = [];
 
   /**
    * Retrieve single accommodation category matching the $code filter
@@ -53,6 +55,40 @@ class AccommodationCategory extends Model {
     $ret->fromXML($sxe);
 
     return $ret;
+  }
+
+  /**
+   * Create single accommodation category from array of key => value params
+   *
+   * @param  array $params
+   * @param  array $data
+   * @param  Credentials $credentials API credentials
+   *
+   * @return self
+   */
+  public static function createSingle (array $params = [], array $data= [], Credentials $credentials = null) {
+    if (!empty($credentials)) {
+      self::setCredentials($credentials);
+    }
+
+    $allowedParams = array(
+      'expand' => 1,
+    );
+
+    $wrongParams = array_diff_key($params, $allowedParams);
+    if (!empty($wrongParams)) {
+      throw new \InvalidArgumentException('Invalid $params filter: ' . implode(', ', array_keys($wrongParams)));
+    }
+
+    $requiredParams = array_diff(self::$requiredFields, array_keys($data));
+    if (!empty($requiredParams)) {
+      throw new \InvalidArgumentException('Required params: ' . implode(', ', $requiredParams));
+    }
+
+    $call = new JsonCall($credentials);
+    $sxe = $call->execute('accommodation-categories', 'POST', array_intersect_key($params, $allowedParams), $data);
+
+    return $sxe;
   }
 
   /**

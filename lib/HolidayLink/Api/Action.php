@@ -13,7 +13,7 @@ use HolidayLink\Transport\XmlCall;
  */
 class Action extends Model {
 
-  static public $fields = [
+  public static $fields = [
     'id',
     'status',
     'type',
@@ -27,7 +27,26 @@ class Action extends Model {
     'updated_at',
   ];
 
-  static public $requiredFields = [
+  /**
+   * accommodation_unit_id options:
+   *  - use id keys from AccommodationUnits::allFromXML()
+   *
+   * status options:
+   *  - const STATUS_ACTIVE = 'active'
+   *  - const STATUS_DISABLED = 'disabled';
+   *
+   * visible_from, visible_to, applicable_from, applicable_to date format:
+   *  - use Y-m-d (2016-01-01)
+   *
+   * amount_value format:
+   *  - use
+   *
+   * amount_unit options:
+   *  -
+   *
+   * @var array
+   */
+  public static $requiredFields = [
     'accommodation_unit_id',
     'status',
     'visible_from',
@@ -37,6 +56,26 @@ class Action extends Model {
     'amount_value',
     'amount_unit',
   ];
+
+  /**
+   * Action statuses
+   */
+  const STATUS_ACTIVE = 'active';
+  const STATUS_DISABLED = 'disabled';
+
+  /**
+   * Action amount units
+   */
+  const AMOUNT_UNIT_PERCENTAGE = 'percentage';
+  const AMOUNT_UNIT_ABSOLUTE = 'absolute';
+
+  /************************ Additional options **************************
+   *
+   * Action types
+   */
+  const TYPE_SPECIAL = 'special';
+  const TYPE_FIRST_MINUTE = 'first_minute';
+  const TYPE_LAST_MINUTE = 'last_minute';
 
   /**
    * Retrieve single action matching the $code filter
@@ -102,7 +141,7 @@ class Action extends Model {
     }
 
     $call = new JsonCall($credentials);
-    $sxe = $call->execute('accommodation-units', 'POST', array_intersect_key($params, $allowedParams), $data);
+    $sxe = $call->execute('actions', 'POST', array_intersect_key($params, $allowedParams), $data);
 
     return $sxe;
   }

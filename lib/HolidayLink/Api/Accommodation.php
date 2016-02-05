@@ -13,7 +13,7 @@ use HolidayLink\Transport\XmlCall;
  */
 class Accommodation extends Model {
 
-  static public $fields = [
+  public static $fields = [
     'status',
     'code',
     'title',
@@ -32,11 +32,35 @@ class Accommodation extends Model {
     'updated_at',
   ];
 
-  static public $requiredFields = [
+  /**
+   * accommodation_category_id options:
+   *  - use id keys from AccommodationCategorys::allFromXML()
+   *
+   * location_id options:
+   *  - use id keys from Location::allFromXML()
+   *  - use just keys of cities (country and region will be defined automatically)
+   *
+   * @var array
+   */
+  public static $requiredFields = [
     'title',
     'accommodation_category_id',
     'location_id',
   ];
+
+  /************************ Additional options **************************
+   *
+   * Accommodation statuses
+   */
+  const STATUS_ACTIVE = 'active';
+  const STATUS_DISABLED = 'disabled';
+
+  /**
+   * Supplier types
+   */
+  const SUPPLIER_TYPE_OWNER = 'owner';
+  const SUPPLIER_TYPE_MANAGER = 'manager';
+  const SUPPLIER_TYPE_AGENCY = 'agency';
 
   /**
    * Retrieve single accommodation matching the $code filter

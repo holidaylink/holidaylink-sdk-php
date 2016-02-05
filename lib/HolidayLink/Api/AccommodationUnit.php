@@ -13,7 +13,7 @@ use HolidayLink\Transport\XmlCall;
  */
 class AccommodationUnit extends Model {
 
-  static public $fields = [
+  public static $fields = [
     'status',
     'code',
     'title',
@@ -24,11 +24,33 @@ class AccommodationUnit extends Model {
     'updated_at',
   ];
 
-  static public $requiredFields = [
+  /**
+   * accommodation_id options:
+   *  - use id keys from Accommodations::allFromXML()
+   *
+   * accommodation_unit_type_id options:
+   *  - use id keys from AccommodationUnitTypes::allFromXML()
+   *
+   * @var array
+   */
+  public static $requiredFields = [
     'title',
-    'accommodation_category_id',
-    'location_id',
+    'accommodation_id',
+    'accommodation_unit_type_id',
   ];
+
+  /************************ Additional options **************************
+   *
+   * Accommodation unit status
+   */
+  const STATUS_ACTIVE = 'active';
+  const STATUS_DISABLED = 'disabled';
+
+  /**
+   * Accommodation unit cooperation modes
+   */
+  const COOPERATION_MODE_BOOKING = 'booking';
+  const COOPERATION_MODE_INQUIRY = 'inquiry';
 
   /**
    * Retrieve single accommodation unit matching the $code filter

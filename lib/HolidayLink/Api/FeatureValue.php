@@ -13,7 +13,7 @@ use HolidayLink\Transport\XmlCall;
  */
 class FeatureValue extends Model {
 
-  static public $fields = [
+  public static $fields = [
     'code',
     'title',
     'feature',
@@ -21,6 +21,12 @@ class FeatureValue extends Model {
     'show_on_list',
     'api_wrapper',
   ];
+
+  /**
+   * Feature value statuses
+   */
+  const STATUS_ACTIVE = 'active';
+  const STATUS_DISABLED = 'disabled';
 
   /**
    * Retrieve single feature value matching the $code filter

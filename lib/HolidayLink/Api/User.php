@@ -13,7 +13,7 @@ use HolidayLink\Transport\XmlCall;
  */
 class User extends Model {
 
-  static public $fields = [
+  public static $fields = [
     'code',
     'first_name',
     'last_name',
@@ -33,6 +33,8 @@ class User extends Model {
     'address',
     'user_comment',
   ];
+
+  public static $requiredFields = [];
 
   /**
    * Retrieve single user matching the $code filter
@@ -67,6 +69,40 @@ class User extends Model {
     $ret->fromXML($sxe);
 
     return $ret;
+  }
+
+  /**
+   * Create single user from array of key => value params
+   *
+   * @param  array $params
+   * @param  array $data
+   * @param  Credentials $credentials API credentials
+   *
+   * @return self
+   */
+  public static function createSingle (array $params = [], array $data= [], Credentials $credentials = null) {
+    if (!empty($credentials)) {
+      self::setCredentials($credentials);
+    }
+
+    $allowedParams = array(
+      'expand' => 1,
+    );
+
+    $wrongParams = array_diff_key($params, $allowedParams);
+    if (!empty($wrongParams)) {
+      throw new \InvalidArgumentException('Invalid $params filter: ' . implode(', ', array_keys($wrongParams)));
+    }
+
+    $requiredParams = array_diff(self::$requiredFields, array_keys($data));
+    if (!empty($requiredParams)) {
+      throw new \InvalidArgumentException('Required params: ' . implode(', ', $requiredParams));
+    }
+
+    $call = new JsonCall($credentials);
+    $sxe = $call->execute('users', 'POST', array_intersect_key($params, $allowedParams), $data);
+
+    return $sxe;
   }
 
   /**

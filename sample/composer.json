@@ -1,14 +1,14 @@
 {
-    "name": "holidaylink/holidaylink-api-sdk-sample-php",
-    "description": "Samples using Holiday-Link.com API SDK for PHP",
-    "homepage": "https://github.com/holidaylink/holidaylink-sdk-php",
-    "config": {
-        "require-all": true
-    },
-    "require": {
-        "php": ">=5.3.0",
-        "ext-json": "*",
-        "holidaylink/api-sdk-php": "dev-master",
-        "guzzlehttp/guzzle": "5.3"
-    }
+  "name": "holidaylink/holidaylink-api-sdk-sample-php",
+  "description": "Samples using Holiday-Link.com API SDK for PHP",
+  "homepage": "https://github.com/holidaylink/holidaylink-sdk-php",
+  "config": {
+    "require-all": true
+  },
+  "require": {
+    "php": ">=5.3.0",
+    "ext-json": "*",
+    "holidaylink/api-sdk-php": "dev-master",
+    "guzzlehttp/guzzle": "5.3"
+  }
 }

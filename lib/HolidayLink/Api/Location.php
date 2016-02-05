@@ -13,13 +13,27 @@ use HolidayLink\Transport\XmlCall;
  */
 class Location extends Model {
 
-  static public $fields = [
+  public static $fields = [
     'id',
     'name',
     'map_lat',
     'map_lng',
     'locations',
   ];
+
+  /**
+   * Location statuses
+   */
+  const STATUS_ACTIVE = 'active';
+  const STATUS_DISABLED = 'disabled';
+  const STATUS_AUTOMATICALLY_ACTIVE = 'automatically_active';
+
+  /**
+   * Location types
+   */
+  const TYPE_COUNTRY = 'country';
+  const TYPE_REGION = 'region';
+  const TYPE_CITY = 'city';
 
   /**
    * Retrieve single location matching the $code filter

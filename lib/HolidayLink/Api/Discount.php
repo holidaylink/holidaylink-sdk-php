@@ -13,13 +13,24 @@ use HolidayLink\Transport\XmlCall;
  */
 class Discount extends Model {
 
-  static public $fields = [
+  public static $fields = [
     'id',
     'title',
     'types',
     'allowedCategories',
   ];
 
+  /**
+   * Discount statuses
+   */
+  const STATUS_ACTIVE = 'active';
+  const STATUS_DISABLED = 'disabled';
+
+  /**
+   * Discount statuses for partner
+   */
+  const STATUS_ACTIVE_FOR_PARTNER = 'active';
+  const STATUS_DISABLED_FOR_PARTNER = 'disabled';
   /**
    * Retrieve single discount matching the $code filter
    *
