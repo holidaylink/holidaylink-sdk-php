@@ -13,7 +13,7 @@ use HolidayLink\Transport\XmlCall;
  */
 class Feature extends Model {
 
-  static public $fields = [
+  public static $fields = [
     'code',
     'type',
     'title',
@@ -28,13 +28,19 @@ class Feature extends Model {
   ];
 
   /**
+   * Feature statuses
+   */
+  const STATUS_ACTIVE = 'active';
+  const STATUS_DISABLED = 'disabled';
+
+  /**
    * Retrieve single feature matching the $code filter
    *
    * @param  string $code
    * @param  array $params
    * @param  Credentials $credentials API credentials
    *
-   * @return Properties  the retrieved feature
+   * @return self  the retrieved feature
    */
   public static function singleFromXML ($code, array $params = null, Credentials $credentials = null) {
     if (empty($params)) {
@@ -70,7 +76,7 @@ class Feature extends Model {
    * @param  array $data
    * @param  Credentials $credentials API credentials
    *
-   * @return Properties  the updated feature
+   * @return self  the updated feature
    */
   public static function updateSingle ($code, array $params = [], array $data= [], Credentials $credentials = null) {
     if (!empty($credentials)) {

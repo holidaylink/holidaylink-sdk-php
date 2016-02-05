@@ -13,7 +13,7 @@ use HolidayLink\Transport\XmlCall;
  */
 class Location extends Model {
 
-  static public $fields = [
+  public static $fields = [
     'id',
     'name',
     'map_lat',
@@ -22,13 +22,27 @@ class Location extends Model {
   ];
 
   /**
+   * Location statuses
+   */
+  const STATUS_ACTIVE = 'active';
+  const STATUS_DISABLED = 'disabled';
+  const STATUS_AUTOMATICALLY_ACTIVE = 'automatically_active';
+
+  /**
+   * Location types
+   */
+  const TYPE_COUNTRY = 'country';
+  const TYPE_REGION = 'region';
+  const TYPE_CITY = 'city';
+
+  /**
    * Retrieve single location matching the $code filter
    *
    * @param  string $code
    * @param  array $params
    * @param  Credentials $credentials API credentials
    *
-   * @return Properties  the retrieved location
+   * @return self  the retrieved location
    */
   public static function singleFromXML ($code, array $params = null, Credentials $credentials = null) {
     if (empty($params)) {
@@ -64,7 +78,7 @@ class Location extends Model {
    * @param  array $data
    * @param  Credentials $credentials API credentials
    *
-   * @return Properties  the updated location
+   * @return self  the updated location
    */
   public static function updateSingle ($code, array $params = [], array $data= [], Credentials $credentials = null) {
     if (!empty($credentials)) {

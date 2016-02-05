@@ -20,12 +20,12 @@ try {
   ];
   // provide data for update - array with key => value structure
   $data = [
-    'title' => 'test teeestic 123',
+    'title' => 'test',
     'postal_code' => '12345',
   ];
 
   //set your own accommodation code, this is only for test purpose
-  $code = 'o43';
+  $code = 'your code';
   $accommodation = Accommodation::updateSingle($code, $params, $data, $apiCredentials);
 } catch (Exception $ex) {
   echo 'Exception:', $ex->getMessage(), PHP_EOL;

@@ -13,7 +13,7 @@ use HolidayLink\Transport\XmlCall;
  */
 class Charge extends Model {
 
-  static public $fields = [
+  public static $fields = [
     'id',
     'title',
     'types',
@@ -23,13 +23,25 @@ class Charge extends Model {
   ];
 
   /**
+   * Charge statuses
+   */
+  const STATUS_ACTIVE = 'active';
+  const STATUS_DISABLED = 'disabled';
+
+  /**
+   * Charge statuses for partner
+   */
+  const STATUS_ACTIVE_FOR_PARTNER = 'active';
+  const STATUS_DISABLED_FOR_PARTNER = 'disabled';
+
+  /**
    * Retrieve single charge matching the $code filter
    *
    * @param  string $code
    * @param  array $params
    * @param  Credentials $credentials API credentials
    *
-   * @return Properties  the retrieved charge
+   * @return self  the retrieved charge
    */
   public static function singleFromXML ($code, array $params = null, Credentials $credentials = null) {
     if (empty($params)) {
@@ -65,7 +77,7 @@ class Charge extends Model {
    * @param  array $data
    * @param  Credentials $credentials API credentials
    *
-   * @return Properties  the updated accommodation
+   * @return self  the updated accommodation
    */
   public static function updateSingle ($code, array $params = [], array $data= [], Credentials $credentials = null) {
     if (!empty($credentials)) {

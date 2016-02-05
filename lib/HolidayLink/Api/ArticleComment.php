@@ -13,7 +13,7 @@ use HolidayLink\Transport\XmlCall;
  */
 class ArticleComment extends Model {
 
-  static public $fields = [
+  public static $fields = [
     'id',
     'user_id',
     'article_id',
@@ -24,6 +24,8 @@ class ArticleComment extends Model {
     'updater_id',
   ];
 
+  public static $requiredFields = [];
+
   /**
    * Retrieve single article comment matching the $code filter
    *
@@ -31,7 +33,7 @@ class ArticleComment extends Model {
    * @param  array $params
    * @param  Credentials $credentials API credentials
    *
-   * @return Properties  the retrieved article comment
+   * @return self  the retrieved article comment
    */
   public static function singleFromXML ($code, array $params = null, Credentials $credentials = null) {
     if (empty($params)) {
@@ -60,6 +62,40 @@ class ArticleComment extends Model {
   }
 
   /**
+   * Create single article comment from array of key => value params
+   *
+   * @param  array $params
+   * @param  array $data
+   * @param  Credentials $credentials API credentials
+   *
+   * @return self
+   */
+  public static function createSingle (array $params = [], array $data= [], Credentials $credentials = null) {
+    if (!empty($credentials)) {
+      self::setCredentials($credentials);
+    }
+
+    $allowedParams = array(
+      'expand' => 1,
+    );
+
+    $wrongParams = array_diff_key($params, $allowedParams);
+    if (!empty($wrongParams)) {
+      throw new \InvalidArgumentException('Invalid $params filter: ' . implode(', ', array_keys($wrongParams)));
+    }
+
+    $requiredParams = array_diff(self::$requiredFields, array_keys($data));
+    if (!empty($requiredParams)) {
+      throw new \InvalidArgumentException('Required params: ' . implode(', ', $requiredParams));
+    }
+
+    $call = new JsonCall($credentials);
+    $sxe = $call->execute('article-comments', 'POST', array_intersect_key($params, $allowedParams), $data);
+
+    return $sxe;
+  }
+
+  /**
    * Update single article comment matching the $code filter and array of key => value params
    *
    * @param  string $code
@@ -67,7 +103,7 @@ class ArticleComment extends Model {
    * @param  array $data
    * @param  Credentials $credentials API credentials
    *
-   * @return Properties  the updated article comment
+   * @return self  the updated article comment
    */
   public static function updateSingle ($code, array $params = [], array $data= [], Credentials $credentials = null) {
     if (!empty($credentials)) {

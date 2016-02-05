@@ -13,7 +13,7 @@ use HolidayLink\Transport\XmlCall;
  */
 class Accommodation extends Model {
 
-  static public $fields = [
+  public static $fields = [
     'status',
     'code',
     'title',
@@ -33,13 +33,43 @@ class Accommodation extends Model {
   ];
 
   /**
+   * accommodation_category_id options:
+   *  - use id keys from AccommodationCategorys::allFromXML()
+   *
+   * location_id options:
+   *  - use id keys from Location::allFromXML()
+   *  - use just keys of cities (country and region will be defined automatically)
+   *
+   * @var array
+   */
+  public static $requiredFields = [
+    'title',
+    'accommodation_category_id',
+    'location_id',
+  ];
+
+  /************************ Additional options **************************
+   *
+   * Accommodation statuses
+   */
+  const STATUS_ACTIVE = 'active';
+  const STATUS_DISABLED = 'disabled';
+
+  /**
+   * Supplier types
+   */
+  const SUPPLIER_TYPE_OWNER = 'owner';
+  const SUPPLIER_TYPE_MANAGER = 'manager';
+  const SUPPLIER_TYPE_AGENCY = 'agency';
+
+  /**
    * Retrieve single accommodation matching the $code filter
    *
    * @param  string $code
    * @param  array $params
    * @param  Credentials $credentials API credentials
    *
-   * @return Properties  the retrieved accommodation
+   * @return self  the retrieved accommodation
    */
   public static function singleFromXML ($code, array $params = [], Credentials $credentials = null) {
     if (!empty($credentials)) {
@@ -65,6 +95,40 @@ class Accommodation extends Model {
   }
 
   /**
+   * Create single accommodation from array of key => value params
+   *
+   * @param  array $params
+   * @param  array $data
+   * @param  Credentials $credentials API credentials
+   *
+   * @return Accommodation
+   */
+  public static function createSingle (array $params = [], array $data= [], Credentials $credentials = null) {
+    if (!empty($credentials)) {
+      self::setCredentials($credentials);
+    }
+
+    $allowedParams = array(
+      'expand' => 1,
+    );
+
+    $wrongParams = array_diff_key($params, $allowedParams);
+    if (!empty($wrongParams)) {
+      throw new \InvalidArgumentException('Invalid $params filter: ' . implode(', ', array_keys($wrongParams)));
+    }
+
+    $requiredParams = array_diff(self::$requiredFields, array_keys($data));
+    if (!empty($requiredParams)) {
+      throw new \InvalidArgumentException('Required params: ' . implode(', ', $requiredParams));
+    }
+
+    $call = new JsonCall($credentials);
+    $sxe = $call->execute('accommodations', 'POST', array_intersect_key($params, $allowedParams), $data);
+
+    return $sxe;
+  }
+
+  /**
    * Update single accommodation matching the $code filter and array of key => value params
    *
    * @param  string $code
@@ -72,7 +136,7 @@ class Accommodation extends Model {
    * @param  array $data
    * @param  Credentials $credentials API credentials
    *
-   * @return Properties  the updated accommodation
+   * @return Accommodation
    */
   public static function updateSingle ($code, array $params = [], array $data= [], Credentials $credentials = null) {
     if (!empty($credentials)) {

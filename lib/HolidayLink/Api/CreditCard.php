@@ -13,7 +13,7 @@ use HolidayLink\Transport\XmlCall;
  */
 class CreditCard extends Model {
 
-  static public $fields = [
+  public static $fields = [
     'id',
     'status',
     'created_at',
@@ -30,7 +30,7 @@ class CreditCard extends Model {
    * @param  array $params
    * @param  Credentials $credentials API credentials
    *
-   * @return Properties  the retrieved credit card
+   * @return self  the retrieved credit card
    */
   public static function singleFromXML ($code, array $params = null, Credentials $credentials = null) {
     if (empty($params)) {
@@ -66,7 +66,7 @@ class CreditCard extends Model {
    * @param  array $data
    * @param  Credentials $credentials API credentials
    *
-   * @return Properties  the updated credit card
+   * @return self  the updated credit card
    */
   public static function updateSingle ($code, array $params = [], array $data= [], Credentials $credentials = null) {
     if (!empty($credentials)) {

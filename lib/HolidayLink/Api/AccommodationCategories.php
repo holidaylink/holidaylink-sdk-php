@@ -30,7 +30,7 @@ class AccommodationCategories extends Model {
    *
    * @param  \SimpleXMLElement $sxe the API response
    *
-   * @return Properties
+   * @return self
    */
   public function fromXML (\SimpleXMLElement $sxe) {
     $categories = array();
@@ -53,7 +53,7 @@ class AccommodationCategories extends Model {
    * @param  array $params
    * @param  Credentials $credentials API credentials
    *
-   * @return Properties  the retrieved categories
+   * @return self  the retrieved categories
    */
   public static function allFromXML (array $params = null, Credentials $credentials = null) {
     if (empty($params)) {

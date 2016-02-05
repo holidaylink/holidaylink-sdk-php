@@ -8,7 +8,7 @@ namespace HolidayLink\Api;
  */
 class AccommodationFeatureValue extends Model {
 
-  static public $fields = [
+  public static $fields = [
     'accommodation',
     'feature',
     'value',

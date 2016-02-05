@@ -13,7 +13,7 @@ use HolidayLink\Transport\XmlCall;
  */
 class Discount extends Model {
 
-  static public $fields = [
+  public static $fields = [
     'id',
     'title',
     'types',
@@ -21,13 +21,24 @@ class Discount extends Model {
   ];
 
   /**
+   * Discount statuses
+   */
+  const STATUS_ACTIVE = 'active';
+  const STATUS_DISABLED = 'disabled';
+
+  /**
+   * Discount statuses for partner
+   */
+  const STATUS_ACTIVE_FOR_PARTNER = 'active';
+  const STATUS_DISABLED_FOR_PARTNER = 'disabled';
+  /**
    * Retrieve single discount matching the $code filter
    *
    * @param  string $code
    * @param  array $params
    * @param  Credentials $credentials API credentials
    *
-   * @return Properties  the retrieved discount
+   * @return self  the retrieved discount
    */
   public static function singleFromXML ($code, array $params = null, Credentials $credentials = null) {
     if (empty($params)) {
@@ -63,7 +74,7 @@ class Discount extends Model {
    * @param  array $data
    * @param  Credentials $credentials API credentials
    *
-   * @return Properties  the updated disocunt
+   * @return self  the updated disocunt
    */
   public static function updateSingle ($code, array $params = [], array $data= [], Credentials $credentials = null) {
     if (!empty($credentials)) {
