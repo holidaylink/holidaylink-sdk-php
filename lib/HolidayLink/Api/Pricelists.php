@@ -75,6 +75,7 @@ class Pricelists extends Model {
 
     $call = new XmlCall($credentials);
     $sxe = $call->execute('pricelists', 'GET', array_intersect_key($params, $allowedParams));
+    self::setTotalPageCount($call->getTotalPageCount());
 
     $ret = new self();
     $ret->fromXML($sxe);

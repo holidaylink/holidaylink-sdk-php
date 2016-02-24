@@ -75,6 +75,7 @@ class MediaDescriptions extends Model {
 
     $call = new XmlCall($credentials);
     $sxe = $call->execute('media-descriptions', 'GET', array_intersect_key($params, $allowedParams));
+    self::setTotalPageCount($call->getTotalPageCount());
 
     $ret = new self();
     $ret->fromXML($sxe);

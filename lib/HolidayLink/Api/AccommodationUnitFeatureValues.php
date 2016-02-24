@@ -75,6 +75,7 @@ class AccommodationUnitFeatureValues extends Model {
 
     $call = new XmlCall($credentials);
     $sxe = $call->execute('accommodation-unit-feature-values', 'GET', array_intersect_key($params, $allowedParams));
+    self::setTotalPageCount($call->getTotalPageCount());
 
     $ret = new self();
     $ret->fromXML($sxe);

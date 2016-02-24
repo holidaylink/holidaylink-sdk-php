@@ -19,6 +19,13 @@ abstract class ApiCall {
   private $httpConfig;
 
   /**
+   * Total page count
+   *
+   * @var int
+   */
+  static protected $totalPageCount = 1;
+
+  /**
    * @var $url
    */
   private $url;
@@ -49,8 +56,17 @@ abstract class ApiCall {
 
     $client = new GuzzleHttpConnection();
     $response = $client->execute($this->url, $method, static::prepareHeaders($data));
+    self::$totalPageCount = $response->getHeader('X-Pagination-Page-Count');
 
     return $this->parseResponse($response);
+  }
+
+  /**
+   * Get total page count
+   * @return int
+   */
+  public function getTotalPageCount (){
+    return self::$totalPageCount;
   }
 
   /**
