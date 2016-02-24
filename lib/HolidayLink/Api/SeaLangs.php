@@ -64,6 +64,8 @@ class SeaLangs extends Model {
     }
     $allowedParams = array(
       'expand' => 1,
+      'language' => 1,
+      'page' => 1,
     );
 
     $wrongParams = array_diff_key($params, $allowedParams);

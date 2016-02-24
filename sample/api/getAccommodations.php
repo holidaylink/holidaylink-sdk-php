@@ -18,6 +18,7 @@ try {
   $params = array(
     'expand' => 'accommodationCategory, supplier_type, location, postal_code, neighborhood, address, map_lat,
       map_lng, map_zoom, photos, videos, created_at, updated_at',
+    'page' => 2
   );
   $accommodations = Accommodations::allFromXML($params, $apiCredentials);
 } catch (Exception $ex) {
