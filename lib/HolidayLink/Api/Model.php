@@ -3,6 +3,7 @@
 namespace HolidayLink\Api;
 
 use HolidayLink\Auth\Credentials;
+use HolidayLink\Transport\XmlCall;
 
 /**
  * Class Model
@@ -14,6 +15,13 @@ abstract class Model {
    * HolidayLink API credentials
    */
   private static $credentials;
+
+  /**
+   * Holidaylink page count
+   *
+   * @var
+   */
+  protected static $totalPageCount;
 
   /**
    * The model data
@@ -90,6 +98,22 @@ abstract class Model {
    */
   public static function getCredentials () {
     return self::$credentials;
+  }
+
+  /**
+   * Set API total page count
+   *
+   * @param $pageCount
+   */
+  public static function setTotalPageCount ($pageCount) {
+    self::$totalPageCount = $pageCount;
+  }
+
+  /**
+   * Get API total page count
+   */
+  public static function getTotalPageCount () {
+    return self::$totalPageCount;
   }
 
   /**

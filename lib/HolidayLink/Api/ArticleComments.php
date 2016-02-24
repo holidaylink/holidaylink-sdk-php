@@ -64,6 +64,8 @@ class ArticleComments extends Model {
     }
     $allowedParams = array(
       'expand' => 1,
+      'language' => 1,
+      'page' => 1,
     );
 
     $wrongParams = array_diff_key($params, $allowedParams);
@@ -73,6 +75,7 @@ class ArticleComments extends Model {
 
     $call = new XmlCall($credentials);
     $sxe = $call->execute('article-comments', 'GET', array_intersect_key($params, $allowedParams));
+    self::setTotalPageCount($call->getTotalPageCount());
 
     $ret = new self();
     $ret->fromXML($sxe);
