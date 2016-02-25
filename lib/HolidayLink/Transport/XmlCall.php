@@ -36,6 +36,6 @@ class XmlCall extends ApiCall {
    * @return \SimpleXMLElement
    */
   protected function parseResponse ($response) {
-    return $response->xml();
+    return new \SimpleXMLElement($response->getBody()->getContents());
   }
 }

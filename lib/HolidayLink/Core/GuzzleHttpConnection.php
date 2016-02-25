@@ -57,9 +57,12 @@ class GuzzleHttpConnection {
         array_key_exists('data', $headers) ? $headers['data'] : []
       );
 
-      $request = $this->client->createRequest($this->requestMethods[$method], $url, $options);
+      $response = $this->client->request($this->requestMethods[$method], $url, $options);
 
-      $response = $this->client->send($request);
+      if ($response->getStatusCode() != 200)
+        throw new \Exception('Invalid respone code - ' . $response->getStatusCode());
+
+      return $response;
 
     } catch (RequestException $e) {
       echo $e->getRequest() . "\n";
