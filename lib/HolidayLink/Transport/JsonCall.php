@@ -45,8 +45,8 @@ class JsonCall extends ApiCall {
    * @return mixed
    */
   protected function parseResponse ($response) {
-    // returns decoded json as array
-    return $response->json();
+    // returns decoded json
+    return json_decode($response->getBody()->getContents());
   }
 
 }
