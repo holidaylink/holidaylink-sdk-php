@@ -56,7 +56,9 @@ abstract class ApiCall {
 
     $client = new GuzzleHttpConnection();
     $response = $client->execute($this->url, $method, static::prepareHeaders($data));
-    self::$totalPageCount = $response->getHeader('X-Pagination-Page-Count');
+
+    if ($method == 'GET')
+      self::$totalPageCount = $response->getHeader('X-Pagination-Page-Count');
 
     return $this->parseResponse($response);
   }
