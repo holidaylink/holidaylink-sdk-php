@@ -48,20 +48,6 @@ class Accommodation extends Model {
     'location_id',
   ];
 
-  /************************ Additional options **************************
-   *
-   * Accommodation statuses
-   */
-  const STATUS_ACTIVE = 'active';
-  const STATUS_DISABLED = 'disabled';
-
-  /**
-   * Supplier types
-   */
-  const SUPPLIER_TYPE_OWNER = 'owner';
-  const SUPPLIER_TYPE_MANAGER = 'manager';
-  const SUPPLIER_TYPE_AGENCY = 'agency';
-
   /**
    * Retrieve single accommodation matching the $code filter
    *

@@ -39,19 +39,6 @@ class AccommodationUnit extends Model {
     'accommodation_unit_type_id',
   ];
 
-  /************************ Additional options **************************
-   *
-   * Accommodation unit status
-   */
-  const STATUS_ACTIVE = 'active';
-  const STATUS_DISABLED = 'disabled';
-
-  /**
-   * Accommodation unit cooperation modes
-   */
-  const COOPERATION_MODE_BOOKING = 'booking';
-  const COOPERATION_MODE_INQUIRY = 'inquiry';
-
   /**
    * Retrieve single accommodation unit matching the $code filter
    *

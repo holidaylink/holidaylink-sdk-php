@@ -83,4 +83,51 @@ class Charges extends Model {
     return $ret;
   }
 
+  /**
+   * Retrieve all charges matching the $params
+   *
+   * @param  array $params
+   * @param  Credentials $credentials API credentials
+   *
+   * @return self  the retrieved charges
+   */
+  public static function search (array $params = null, Credentials $credentials = null) {
+    if (empty($params)) {
+      $params = array();
+    }
+    if (!empty($credentials)) {
+      self::setCredentials($credentials);
+    }
+
+    $allowedParams = array(
+      'expand' => 1,
+      'language' => 1,
+      'page' => 1,
+      'id' => 1,
+      'accommodation_category_id' => 1,
+      'title' => 1,
+      'display_mandatory' => 1,
+      'display_included' => 1,
+      'display_optional' => 1,
+      'display_per_night' => 1,
+      'display_per_week' => 1,
+      'display_once' => 1,
+      'display_per_person' => 1,
+      'display_per_unit' => 1,
+    );
+
+    $wrongParams = array_diff_key($params, $allowedParams);
+    if (!empty($wrongParams)) {
+      throw new \InvalidArgumentException('Invalid $params filter: ' . implode(', ', array_keys($wrongParams)));
+    }
+
+    $call = new XmlCall($credentials);
+    $sxe = $call->execute('charges/search', 'GET', array_intersect_key($params, $allowedParams));
+    self::setTotalPageCount($call->getTotalPageCount());
+
+    $ret = new self();
+    $ret->fromXML($sxe);
+
+    return $ret;
+  }
 }

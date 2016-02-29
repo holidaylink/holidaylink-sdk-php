@@ -83,4 +83,56 @@ class Discounts extends Model {
     return $ret;
   }
 
+  /**
+   * Retrieve all discounts matching the $params
+   *
+   * @param  array $params
+   * @param  Credentials $credentials API credentials
+   *
+   * @return self  the retrieved discounts
+   */
+  public static function search (array $params = null, Credentials $credentials = null) {
+    if (empty($params)) {
+      $params = array();
+    }
+    if (!empty($credentials)) {
+      self::setCredentials($credentials);
+    }
+
+    $allowedParams = array(
+      'expand' => 1,
+      'language' => 1,
+      'page' => 1,
+      'id' => 1,
+      'accommodation_category_id' => 1,
+      'title' => 1,
+      'allow_child_from_age' => 1,
+      'allow_child_to_age' => 1,
+      'allow_child_plus_adult' => 1,
+      'allow_child_on_bed_type' => 1,
+      'min_number_of_children' => 1,
+      'allow_stay_over_number_of_nights' => 1,
+      'allow_adult_on_extra_bed' => 1,
+      'allow_per_bed' => 1,
+      'allow_number_of_children_alone_in_room' => 1,
+      'allow_pay_nights_get_more' => 1,
+      'allow_apply_discount_on_last_child' => 1,
+      'allow_single_use' => 1,
+    );
+
+    $wrongParams = array_diff_key($params, $allowedParams);
+    if (!empty($wrongParams)) {
+      throw new \InvalidArgumentException('Invalid $params filter: ' . implode(', ', array_keys($wrongParams)));
+    }
+
+    $call = new XmlCall($credentials);
+    $sxe = $call->execute('discounts/search', 'GET', array_intersect_key($params, $allowedParams));
+    self::setTotalPageCount($call->getTotalPageCount());
+
+    $ret = new self();
+    $ret->fromXML($sxe);
+
+    return $ret;
+  }
+
 }

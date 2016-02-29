@@ -29,7 +29,7 @@ try {
    */
   $data = [
     'accommodation_unit_id' => 17,
-    'status' => Action::STATUS_ACTIVE,
+    'status' => 'Active',
     'visible_from' => '2016-06-15',
     'visible_to' => '2016-06-30',
     'applicable_from' => '2016-06-15',
