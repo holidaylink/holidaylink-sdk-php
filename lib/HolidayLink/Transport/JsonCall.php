@@ -30,6 +30,7 @@ class JsonCall extends ApiCall {
       'headers' => [
         'Accept' => self::ACCEPT,
         'Content-Type' => self::CONTENT_TYPE,
+        'Content-Length' => 0,
       ],
       'data' => [
         'json' => $data
@@ -46,7 +47,7 @@ class JsonCall extends ApiCall {
    */
   protected function parseResponse ($response) {
     // returns decoded json
-    return json_decode($response->getBody()->getContents());
+    return $response->getBody()->getContents();
   }
 
 }

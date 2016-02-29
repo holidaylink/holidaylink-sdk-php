@@ -55,7 +55,14 @@ abstract class Model {
    * @return array the results
    */
   public function toArray () {
-    return $this->_convertToArray($this->_data);
+    die('kurac');
+    if (is_array($this->_data))
+      return $this->_convertToArray($this->_data);
+
+    if (json_decode($this->_data))
+      return json_decode($this->_data);
+
+    return (array) $this->_data;
   }
 
   /**

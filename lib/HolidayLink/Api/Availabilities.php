@@ -142,10 +142,7 @@ class Availabilities extends Model {
     $sxe = $call->execute('availabilities/statuses', 'GET', []);
     self::setTotalPageCount($call->getTotalPageCount());
 
-    $ret = new self();
-    $ret->fromXML($sxe);
-
-    return $ret;
+    return $sxe;
   }
 
 }

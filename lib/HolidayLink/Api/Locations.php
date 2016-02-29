@@ -162,10 +162,7 @@ class Locations extends Model {
     $sxe = $call->execute('locations/statuses', 'GET', []);
     self::setTotalPageCount($call->getTotalPageCount());
 
-    $ret = new self();
-    $ret->fromXML($sxe);
-
-    return $ret;
+    return $sxe;
   }
 
   /**
@@ -184,10 +181,7 @@ class Locations extends Model {
     $sxe = $call->execute('locations/cities', 'GET', []);
     self::setTotalPageCount($call->getTotalPageCount());
 
-    $ret = new self();
-    $ret->fromXML($sxe);
-
-    return $ret;
+    return $sxe;
   }
 
 }
