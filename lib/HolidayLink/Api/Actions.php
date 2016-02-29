@@ -3,6 +3,7 @@
 namespace HolidayLink\Api;
 
 use HolidayLink\Auth\Credentials;
+use HolidayLink\Transport\JsonCall;
 use HolidayLink\Transport\XmlCall;
 
 /**
@@ -140,7 +141,7 @@ class Actions extends Model {
       self::setCredentials($credentials);
     }
 
-    $call = new XmlCall($credentials);
+    $call = new JsonCall($credentials);
     $sxe = $call->execute('actions/statuses', 'GET', []);
     self::setTotalPageCount($call->getTotalPageCount());
 

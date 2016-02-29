@@ -105,7 +105,7 @@ class AccommodationCategories extends Model {
       'page' => 1,
       'id' => 1,
       'code' => 1,
-      'title' => 1,
+      'title'
     );
 
     $wrongParams = array_diff_key($params, $allowedParams);

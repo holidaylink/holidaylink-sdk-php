@@ -3,6 +3,7 @@
 namespace HolidayLink\Api;
 
 use HolidayLink\Auth\Credentials;
+use HolidayLink\Transport\JsonCall;
 use HolidayLink\Transport\XmlCall;
 
 /**
@@ -140,7 +141,7 @@ class Accommodations extends Model {
       self::setCredentials($credentials);
     }
 
-    $call = new XmlCall($credentials);
+    $call = new JsonCall($credentials);
     $sxe = $call->execute('accommodations/statuses', 'GET', []);
     self::setTotalPageCount($call->getTotalPageCount());
 
@@ -162,7 +163,7 @@ class Accommodations extends Model {
       self::setCredentials($credentials);
     }
 
-    $call = new XmlCall($credentials);
+    $call = new JsonCall($credentials);
     $sxe = $call->execute('accommodations/supplier-types', 'GET', []);
     self::setTotalPageCount($call->getTotalPageCount());
 
