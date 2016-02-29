@@ -25,12 +25,7 @@ class Availability extends Model {
 
   /**
    * status options:
-   *  - const STATUS_UNSET = 0
-   *  - const STATUS_AVAILABLE = 1
-   *  - const STATUS_RESERVED_NOT_PAYED = 2
-   *  - const STATUS_RESERVED_PAYED = 3
-   *  - const STATUS_RESERVED_BY_AGENCY = 4
-   *  - const STATUS_RESERVED_BY_OWNER = 5
+   *  fetch from Availabilities::statuses()
    *
    * start_date & end_date format:
    *  - Y-m-d (2016-01-01)
@@ -42,16 +37,6 @@ class Availability extends Model {
     'start_date',
     'end_date',
   ];
-
-  /**
-   * Availability statuses
-   */
-  const STATUS_UNSET = 0;
-  const STATUS_AVAILABLE = 1;
-  const STATUS_RESERVED_NOT_PAYED = 2;
-  const STATUS_RESERVED_PAYED = 3;
-  const STATUS_RESERVED_BY_AGENCY = 4;
-  const STATUS_RESERVED_BY_OWNER = 5;
 
   /************************ Additional options **************************
    *

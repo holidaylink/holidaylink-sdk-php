@@ -84,4 +84,48 @@ class AccommodationUnits extends Model {
     return $ret;
   }
 
+  /**
+   * Retrieve all statuses
+   *
+   * @param  Credentials $credentials API credentials
+   *
+   * @return self  the retrieved statuses
+   */
+  public static function statuses (Credentials $credentials = null) {
+    if (!empty($credentials)) {
+      self::setCredentials($credentials);
+    }
+
+    $call = new XmlCall($credentials);
+    $sxe = $call->execute('accommodation-units/statuses', 'GET', []);
+    self::setTotalPageCount($call->getTotalPageCount());
+
+    $ret = new self();
+    $ret->fromXML($sxe);
+
+    return $ret;
+  }
+
+  /**
+   * Retrieve all cooperation modes
+   *
+   * @param  Credentials $credentials API credentials
+   *
+   * @return self  the retrieved cooperation modes
+   */
+  public static function cooperationTypes (Credentials $credentials = null) {
+    if (!empty($credentials)) {
+      self::setCredentials($credentials);
+    }
+
+    $call = new XmlCall($credentials);
+    $sxe = $call->execute('accommodation-units/cooperation-modes', 'GET', []);
+    self::setTotalPageCount($call->getTotalPageCount());
+
+    $ret = new self();
+    $ret->fromXML($sxe);
+
+    return $ret;
+  }
+
 }

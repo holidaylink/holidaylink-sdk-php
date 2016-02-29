@@ -58,12 +58,6 @@ class Action extends Model {
   ];
 
   /**
-   * Action statuses
-   */
-  const STATUS_ACTIVE = 'active';
-  const STATUS_DISABLED = 'disabled';
-
-  /**
    * Action amount units
    */
   const AMOUNT_UNIT_PERCENTAGE = 'percentage';

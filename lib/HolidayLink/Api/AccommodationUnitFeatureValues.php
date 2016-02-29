@@ -82,4 +82,46 @@ class AccommodationUnitFeatureValues extends Model {
 
     return $ret;
   }
+
+  /**
+   * Retrieve all accommodation unit feature values matching the $params
+   *
+   * @param  array $params
+   * @param  Credentials $credentials API credentials
+   *
+   * @return self  the retrieved accommodation unit feature values
+   */
+  public static function search (array $params = null, Credentials $credentials = null) {
+    if (empty($params)) {
+      $params = array();
+    }
+    if (!empty($credentials)) {
+      self::setCredentials($credentials);
+    }
+
+    $allowedParams = array(
+      'expand' => 1,
+      'language' => 1,
+      'page' => 1,
+      'accommodation_unit_id' => 1,
+      'feature_id' => 1,
+      'accommodation_unit_type_features_child' => 1,
+    );
+
+    $wrongParams = array_diff_key($params, $allowedParams);
+    if (!empty($wrongParams)) {
+      throw new \InvalidArgumentException('Invalid $params filter: ' . implode(', ', array_keys($wrongParams)));
+    }
+
+    $call = new XmlCall($credentials);
+    $sxe = $call->execute('accommodation-unit-feature-values/search', 'GET', array_intersect_key($params,
+      $allowedParams));
+    self::setTotalPageCount($call->getTotalPageCount());
+
+    $ret = new self();
+    $ret->fromXML($sxe);
+
+    return $ret;
+  }
+
 }

@@ -83,4 +83,71 @@ class Actions extends Model {
     return $ret;
   }
 
+  /**
+   * Retrieve all actions matching the $params
+   *
+   * @param  array $params
+   * @param  Credentials $credentials API credentials
+   *
+   * @return self  the retrieved actions
+   */
+  public static function search (array $params = null, Credentials $credentials = null) {
+    if (empty($params)) {
+      $params = array();
+    }
+    if (!empty($credentials)) {
+      self::setCredentials($credentials);
+    }
+
+    $allowedParams = array(
+      'expand' => 1,
+      'language' => 1,
+      'page' => 1,
+      'id' => 1,
+      'accommodation_unit_id' => 1,
+      'status' => 1,
+      'type' => 1,
+      'visible_from' => 1,
+      'visible_to' => 1,
+      'applicable_from' => 1,
+      'applicable_to' => 1,
+    );
+
+    $wrongParams = array_diff_key($params, $allowedParams);
+    if (!empty($wrongParams)) {
+      throw new \InvalidArgumentException('Invalid $params filter: ' . implode(', ', array_keys($wrongParams)));
+    }
+
+    $call = new XmlCall($credentials);
+    $sxe = $call->execute('actions/search', 'GET', array_intersect_key($params, $allowedParams));
+    self::setTotalPageCount($call->getTotalPageCount());
+
+    $ret = new self();
+    $ret->fromXML($sxe);
+
+    return $ret;
+  }
+
+  /**
+   * Retrieve all statuses
+   *
+   * @param  Credentials $credentials API credentials
+   *
+   * @return self  the retrieved statuses
+   */
+  public static function statuses (Credentials $credentials = null) {
+    if (!empty($credentials)) {
+      self::setCredentials($credentials);
+    }
+
+    $call = new XmlCall($credentials);
+    $sxe = $call->execute('actions/statuses', 'GET', []);
+    self::setTotalPageCount($call->getTotalPageCount());
+
+    $ret = new self();
+    $ret->fromXML($sxe);
+
+    return $ret;
+  }
+
 }
