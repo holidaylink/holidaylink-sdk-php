@@ -101,10 +101,7 @@ class AccommodationUnits extends Model {
     $sxe = $call->execute('accommodation-units/statuses', 'GET', []);
     self::setTotalPageCount($call->getTotalPageCount());
 
-    $ret = new self();
-    $ret->fromXML($sxe);
-
-    return $ret;
+    return $sxe;
   }
 
   /**
@@ -123,10 +120,7 @@ class AccommodationUnits extends Model {
     $sxe = $call->execute('accommodation-units/cooperation-modes', 'GET', []);
     self::setTotalPageCount($call->getTotalPageCount());
 
-    $ret = new self();
-    $ret->fromXML($sxe);
-
-    return $ret;
+    return $sxe;
   }
 
 }

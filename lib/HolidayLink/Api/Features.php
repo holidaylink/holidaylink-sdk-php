@@ -145,10 +145,7 @@ class Features extends Model {
     $sxe = $call->execute('features/types', 'GET', []);
     self::setTotalPageCount($call->getTotalPageCount());
 
-    $ret = new self();
-    $ret->fromXML($sxe);
-
-    return $ret;
+    return $sxe;
   }
 
 }

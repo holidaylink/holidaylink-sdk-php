@@ -145,10 +145,7 @@ class Actions extends Model {
     $sxe = $call->execute('actions/statuses', 'GET', []);
     self::setTotalPageCount($call->getTotalPageCount());
 
-    $ret = new self();
-    $ret->fromXML($sxe);
-
-    return $ret;
+    return $sxe;
   }
 
 }

@@ -145,10 +145,7 @@ class Accommodations extends Model {
     $sxe = $call->execute('accommodations/statuses', 'GET', []);
     self::setTotalPageCount($call->getTotalPageCount());
 
-    $ret = new self();
-    $ret->fromXML($sxe);
-
-    return $ret;
+    return $sxe;
   }
 
   /**
@@ -167,9 +164,6 @@ class Accommodations extends Model {
     $sxe = $call->execute('accommodations/supplier-types', 'GET', []);
     self::setTotalPageCount($call->getTotalPageCount());
 
-    $ret = new self();
-    $ret->fromXML($sxe);
-
-    return $ret;
+    return $sxe;
   }
 }
