@@ -55,7 +55,6 @@ abstract class Model {
    * @return array the results
    */
   public function toArray () {
-    die('kurac');
     if (is_array($this->_data))
       return $this->_convertToArray($this->_data);
 
