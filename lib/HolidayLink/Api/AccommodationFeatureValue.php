@@ -55,6 +55,37 @@ class AccommodationFeatureValue extends Model {
   }
 
   /**
+   * Create single accommodation feature value matching the $code filter and array of key => value params
+   *
+   * @param  string $code
+   * @param  array $params
+   * @param  array $data
+   * @param  Credentials $credentials API credentials
+   *
+   * @return Accommodation feature value
+   */
+  public static function createSingle (array $params = [], array $data= [], Credentials $credentials = null) {
+    if (!empty($credentials)) {
+      self::setCredentials($credentials);
+    }
+
+    $allowedParams = array(
+      'expand' => 1,
+    );
+
+    $wrongParams = array_diff_key($params, $allowedParams);
+    if (!empty($wrongParams)) {
+      throw new \InvalidArgumentException('Invalid $params filter: ' . implode(', ', array_keys($wrongParams)));
+    }
+
+    $call = new JsonCall($credentials);
+    $sxe = $call->execute('accommodation-feature-values', 'POST', array_intersect_key($params, $allowedParams), $data);
+
+    return $sxe;
+  }
+
+
+  /**
    * Update single accommodation feature value matching the $code filter and array of key => value params
    *
    * @param  string $code
