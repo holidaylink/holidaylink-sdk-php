@@ -105,6 +105,7 @@ class AccommodationUnitFeatureValues extends Model {
       'page' => 1,
       'accommodation_unit_id' => 1,
       'feature_id' => 1,
+      'feature_value_id' => 1,
       'accommodation_unit_type_features_child' => 1,
     );
 
