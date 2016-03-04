@@ -123,4 +123,51 @@ class AccommodationUnits extends Model {
     return $sxe;
   }
 
+  /**
+   * Retrieve all accommodation units matching the $params
+   *
+   * @param  array $params
+   * @param  Credentials $credentials API credentials
+   *
+   * @return self  the retrieved accommodation units
+   */
+  public static function search (array $params = null, Credentials $credentials = null) {
+    if (empty($params)) {
+      $params = array();
+    }
+    if (!empty($credentials)) {
+      self::setCredentials($credentials);
+    }
+
+    $allowedParams = array(
+      'expand' => 1,
+      'language' => 1,
+      'page' => 1,
+      'id' => 1,
+      'accommodation_id' => 1,
+      'accommodation_unit_type_id' => 1,
+      'creator_id' => 1,
+      'updater_id' => 1,
+      'created_at' => 1,
+      'updated_at' => 1,
+      'status' => 1,
+      'code' => 1,
+      'title' => 1
+    );
+
+    $wrongParams = array_diff_key($params, $allowedParams);
+    if (!empty($wrongParams)) {
+      throw new \InvalidArgumentException('Invalid $params filter: ' . implode(', ', array_keys($wrongParams)));
+    }
+
+    $call = new XmlCall($credentials);
+    $sxe = $call->execute('accommodation-units/search', 'GET', array_intersect_key($params, $allowedParams));
+    self::setTotalPageCount($call->getTotalPageCount());
+
+    $ret = new self();
+    $ret->fromXML($sxe);
+
+    return $ret;
+  }
+
 }
