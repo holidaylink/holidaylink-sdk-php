@@ -59,7 +59,7 @@ class GuzzleHttpConnection {
 
       $response = $this->client->request($this->requestMethods[$method], $url, $options);
 
-      if ($response->getStatusCode() != 200 && $response->getStatusCode() != 201)
+      if ($response->getStatusCode() != 200 && $response->getStatusCode() != 201 && $response->getStatusCode() != 204)
         throw new \Exception('Invalid respone code - ' . $response->getStatusCode());
 
       return $response;

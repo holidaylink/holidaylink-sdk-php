@@ -4,6 +4,7 @@ namespace HolidayLink\Api;
 
 use HolidayLink\Auth\Credentials;
 use HolidayLink\Transport\JsonCall;
+use HolidayLink\Transport\SimpleCall;
 use HolidayLink\Transport\XmlCall;
 
 /**
@@ -117,6 +118,26 @@ class AccommodationUnitFeatureValue extends Model {
       $data);
 
     return $sxe;
+  }
+
+  /**
+   * Delete single accommodation unit feature value matching the $code filter
+   *
+   * @param  string $code
+   * @param  Credentials $credentials API credentials
+   *
+   * @return bool
+   */
+  public static function deleteSingle ($code, Credentials $credentials = null) {
+
+    if (!empty($credentials)) {
+      self::setCredentials($credentials);
+    }
+
+    $call = new SimpleCall($credentials);
+    $response = $call->execute('accommodation-unit-feature-values/' . $code, 'DELETE');
+
+    return $response;
   }
 
 }
