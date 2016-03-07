@@ -65,15 +65,8 @@ class GuzzleHttpConnection {
       return $response;
 
     } catch (RequestException $e) {
-      echo $e->getMessage() . "\n";
-
-      if ($e->hasResponse()) {
-        echo $e->getResponse() . "\n";
-      }
-      return false;
+      throw new \Exception($e->getMessage());
     }
-
-    return $response;
   }
 
 }

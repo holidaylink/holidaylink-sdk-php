@@ -38,7 +38,7 @@ class Pricelist extends Model {
    * @var array
    */
   public static $requiredFields = [
-    'accommodation_id ',
+    'accommodation_unit_id',
     'date_arrival',
     'date_departure',
   ];
