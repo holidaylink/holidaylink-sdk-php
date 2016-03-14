@@ -59,7 +59,7 @@ abstract class ApiCall {
 
     if ($method == 'GET')
       self::$totalPageCount = $response->hasHeader('X-Pagination-Page-Count') ?
-        (int) reset($response->getHeader('X-Pagination-Page-Count')) : 1;
+          (int) reset($response->getHeader('X-Pagination-Page-Count')) : 1;
 
     return $this->parseResponse($response);
   }

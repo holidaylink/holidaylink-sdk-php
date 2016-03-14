@@ -14,13 +14,13 @@ use HolidayLink\Transport\XmlCall;
 class AccommodationUnitFeatureValue extends Model {
 
   public static $fields = [
-    'accommodation',
-    'feature',
-    'value',
-    'accommodationUnitTypeFeatures',
-    'accommodation_unit_type_features_child',
-    'parent_id',
-    'parent',
+      'accommodation',
+      'feature',
+      'value',
+      'accommodationUnitTypeFeatures',
+      'accommodation_unit_type_features_child',
+      'parent_id',
+      'parent',
   ];
 
   /**
@@ -38,7 +38,7 @@ class AccommodationUnitFeatureValue extends Model {
     }
 
     $allowedParams = array(
-      'expand' => 1,
+        'expand' => 1,
     );
 
     $wrongParams = array_diff_key($params, $allowedParams);
@@ -47,8 +47,8 @@ class AccommodationUnitFeatureValue extends Model {
     }
 
     $call = new XmlCall($credentials);
-    $sxe = $call->execute('accommodation-unit-feature-values/' . $code, 'GET', array_intersect_key($params,
-      $allowedParams));
+    $sxe = $call->execute('accommodation-unit-feature-values/' . $code, 'GET',
+      array_intersect_key($params, $allowedParams));
 
     $ret = new self();
     $ret->fromXML($sxe);
@@ -59,7 +59,6 @@ class AccommodationUnitFeatureValue extends Model {
   /**
    * Create single accommodation unit feature value matching the $code filter and array of key => value params
    *
-   * @param  string $code
    * @param  array $params
    * @param  array $data
    * @param  Credentials $credentials API credentials
@@ -72,7 +71,7 @@ class AccommodationUnitFeatureValue extends Model {
     }
 
     $allowedParams = array(
-      'expand' => 1,
+        'expand' => 1,
     );
 
     $wrongParams = array_diff_key($params, $allowedParams);
@@ -81,8 +80,8 @@ class AccommodationUnitFeatureValue extends Model {
     }
 
     $call = new JsonCall($credentials);
-    $sxe = $call->execute('accommodation-unit-feature-values', 'POST', array_intersect_key($params, $allowedParams),
-      $data);
+    $sxe = $call->execute('accommodation-unit-feature-values', 'POST',
+      array_intersect_key($params, $allowedParams), $data);
 
     return $sxe;
   }
@@ -104,7 +103,7 @@ class AccommodationUnitFeatureValue extends Model {
     }
 
     $allowedParams = array(
-      'expand' => 1,
+        'expand' => 1,
     );
 
     $wrongParams = array_diff_key($params, $allowedParams);
@@ -113,9 +112,8 @@ class AccommodationUnitFeatureValue extends Model {
     }
 
     $call = new JsonCall($credentials);
-    $sxe = $call->execute('accommodation-unit-feature-values/' . $code, 'PUT', array_intersect_key($params,
-      $allowedParams),
-      $data);
+    $sxe = $call->execute('accommodation-unit-feature-values/' . $code, 'PUT',
+      array_intersect_key($params, $allowedParams), $data);
 
     return $sxe;
   }
