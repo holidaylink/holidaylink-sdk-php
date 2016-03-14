@@ -14,13 +14,13 @@ use HolidayLink\Transport\XmlCall;
 class AccommodationFeatureValue extends Model {
 
   public static $fields = [
-    'accommodation',
-    'feature',
-    'value',
-    'accommodationCategoryFeatures',
-    'accommodation_category_features_child',
-    'parent_id',
-    'parent',
+      'accommodation',
+      'feature',
+      'value',
+      'accommodationCategoryFeatures',
+      'accommodation_category_features_child',
+      'parent_id',
+      'parent',
   ];
 
   /**
@@ -38,7 +38,7 @@ class AccommodationFeatureValue extends Model {
     }
 
     $allowedParams = array(
-      'expand' => 1,
+        'expand' => 1,
     );
 
     $wrongParams = array_diff_key($params, $allowedParams);
@@ -58,7 +58,6 @@ class AccommodationFeatureValue extends Model {
   /**
    * Create single accommodation feature value matching the $code filter and array of key => value params
    *
-   * @param  string $code
    * @param  array $params
    * @param  array $data
    * @param  Credentials $credentials API credentials
@@ -71,7 +70,7 @@ class AccommodationFeatureValue extends Model {
     }
 
     $allowedParams = array(
-      'expand' => 1,
+        'expand' => 1,
     );
 
     $wrongParams = array_diff_key($params, $allowedParams);
@@ -102,7 +101,7 @@ class AccommodationFeatureValue extends Model {
     }
 
     $allowedParams = array(
-      'expand' => 1,
+        'expand' => 1,
     );
 
     $wrongParams = array_diff_key($params, $allowedParams);
@@ -111,8 +110,8 @@ class AccommodationFeatureValue extends Model {
     }
 
     $call = new JsonCall($credentials);
-    $sxe = $call->execute('accommodation-feature-values/' . $code, 'PUT', array_intersect_key($params, $allowedParams),
-      $data);
+    $sxe = $call->execute('accommodation-feature-values/' . $code, 'PUT',
+      array_intersect_key($params, $allowedParams), $data);
 
     return $sxe;
   }
