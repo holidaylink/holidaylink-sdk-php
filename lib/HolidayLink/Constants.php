@@ -22,6 +22,6 @@ class Constants {
   /**
    * Constant provides API_LIVE_ENDPOINT
    */
-  const API_LIVE_ENDPOINT = 'https://www.holiday-link.com/api/';
+  const API_LIVE_ENDPOINT = 'http://dev.holiday-link.com/api/';
 
 }
